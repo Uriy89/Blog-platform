@@ -1,0 +1,140 @@
+.section {
+    width: 941px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+    margin-top: 26px;
+}
+
+.articleHeader {
+    width: 97%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    align-items: baseline;
+    
+}
+
+.contentTable {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.articleTitle {
+    font-size: 20px;
+    color: #1890FF;
+    font-style: normal;
+    font-weight: 400;
+    max-width: 600px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.articleLike {
+    font-size: 14px;
+}
+
+.articleLike::before {
+    content: url('../../assets/images/heart.svg');
+    position: relative;
+    top: 2px;
+    right: 1px;
+}
+
+.tags {
+    display: flex;
+    gap: 6px;
+    position: relative;
+    top: -17px;
+}
+
+.articleTag {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.50);
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    border-radius: 4px;
+    padding: 2px 3px;
+}
+
+.userTable {
+    display: flex;
+    gap: 12px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.datePublication {
+    position: absolute;
+    transform: translateY(30px);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.userName {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.userAvatar {
+    width: 46px;
+    height: 46px;
+}
+
+.datePublication {
+    color: rgba(0, 0, 0, 0.50);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.bodyContent {
+    width: 682px;
+    font-size: 12px;
+    padding-left: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.fullContent {
+    padding-left: 16px;
+    padding-top: 26px;
+}
+
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #1890FF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

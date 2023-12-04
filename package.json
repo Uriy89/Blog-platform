@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -34,5 +35,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "antd": "^5.11.5",
+    "axios": "^1.6.2",
+    "cra-template-ipt-sun-crcf": "^1.1.4",
+    "create-react-component-folder": "^0.3.7",
+    "date-fns": "^2.30.0",
+    "markdown-to-jsx": "^7.3.2",
+    "npx": "^10.2.2",
+    "prop-types": "^15.8.1",
+    "react-uuid": "^2.0.0"
   }
 }
