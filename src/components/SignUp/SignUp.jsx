@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import style from "./SignUp.module.css";
+import React, { useState } from 'react';
+import style from './SignUp.module.css';
 import { Link } from 'react-router-dom';
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
-
 
 const SignUp = () => {
   const [pass, setPass] = useState('');
@@ -16,20 +15,20 @@ const SignUp = () => {
     reset,
     watch
   } = useForm({
-    mode: "onBlur"
+    mode: 'onBlur'
   });
 
   const confirmPass = watch('rpassword', '');
-  
+
   const checkboxClass = classNames({
     [style.checkBox]: true,
     [style.isCheked]: checked
-  })
+  });
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
     reset();
-  }
+  };
 
   return (
     <section className={style.signUp}>
@@ -38,7 +37,8 @@ const SignUp = () => {
         <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
           <label className={style.label}>
             Username
-            <input type="text" 
+            <input
+              type="text"
               {...register('username', {
                 required: true,
                 defaultChecked: true,
@@ -50,74 +50,89 @@ const SignUp = () => {
                   value: 20,
                   message: 'Name must be between 3 and 20 characters.'
                 }
-              })} 
+              })}
               name="username"
-              placeholder="Username" 
+              placeholder="Username"
               className={style.input}
             />
           </label>
-          <div className={style.error}>{errors?.username && <p>{errors?.username?.message}</p>}</div>
+          <div className={style.error}>
+            {errors?.username && <p>{errors?.username?.message}</p>}
+          </div>
           <label className={style.label}>
             Email address
-            <input type="text" {...register("email", {
-              required: true,
-              pattern: {
-                value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                message: "Invalid email format"
-              }
-            })}
-            name="email" 
-            placeholder="Email" 
-            className={style.input}
-          />
+            <input
+              type="text"
+              {...register('email', {
+                required: true,
+                pattern: {
+                  value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  message: 'Invalid email format'
+                }
+              })}
+              name="email"
+              placeholder="Email"
+              className={style.input}
+            />
           </label>
           <div className={style.error}>{errors?.email && <p>{errors?.email?.message}</p>}</div>
           <label className={style.label}>
             Password
-            <input 
-              type="password" 
-              {...register("password", {
+            <input
+              type="password"
+              {...register('password', {
                 required: true,
                 minLength: {
                   value: 6,
-                  message: "Your password needs to be at least 6 characters."
+                  message: 'Your password needs to be at least 6 characters.'
                 }
-              })} 
-              onChange={(e) => setPass(e.target.value)} 
-              name="password" 
-              placeholder="Password" 
+              })}
+              onChange={(e) => setPass(e.target.value)}
+              name="password"
+              placeholder="Password"
               className={style.input}
             />
           </label>
-          <div className={style.error}>{errors?.password && <p>{errors?.password?.message}</p>}</div>
+          <div className={style.error}>
+            {errors?.password && <p>{errors?.password?.message}</p>}
+          </div>
           <label className={style.label}>
             Repeat Password
-            <input type="password" {...register("rpassword", {
-              required: true,
+            <input
+              type="password"
+              {...register('rpassword', {
+                required: true
               })}
-              name="rpassword" 
-              placeholder="Repeat password" 
+              name="rpassword"
+              placeholder="Repeat password"
               className={style.input}
             />
           </label>
-          <div className={style.error}>{pass === confirmPass ? null : <p>Passwords must match</p>}</div>
+          <div className={style.error}>
+            {pass === confirmPass ? null : <p>Passwords must match</p>}
+          </div>
           <hr />
           <label className={style.agree}>
-            <input 
-              type='checkbox' 
-              name="checkbox" 
+            <input
+              type="checkbox"
+              name="checkbox"
               className={style.agreeInput}
               onChange={() => setChecked(!checked)}
             />
-            <span className={checkboxClass} ></span>
-            I agree to the processing of my personal information
+            <span className={checkboxClass}></span>I agree to the processing of my personal
+            information
           </label>
           <button className={style.createButton}>Create</button>
         </form>
-        <span className={style.signIn}>Already have an account? <Link to='/sign-in'><span>Sign In.</span></Link></span>
+        <span className={style.signIn}>
+          Already have an account?{' '}
+          <Link to="/sign-in">
+            <span>Sign In.</span>
+          </Link>
+        </span>
       </div>
     </section>
   );
-}
+};
 
 export default SignUp;
