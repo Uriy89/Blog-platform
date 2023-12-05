@@ -39,12 +39,14 @@
   "devDependencies": {
     "antd": "^5.11.5",
     "axios": "^1.6.2",
+    "classnames": "^2.3.2",
     "cra-template-ipt-sun-crcf": "^1.1.4",
     "create-react-component-folder": "^0.3.7",
     "date-fns": "^2.30.0",
     "markdown-to-jsx": "^7.3.2",
     "npx": "^10.2.2",
     "prop-types": "^15.8.1",
+    "react-hook-form": "^7.48.2",
     "react-uuid": "^2.0.0"
   }
 }

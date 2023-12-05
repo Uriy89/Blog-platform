@@ -9,6 +9,7 @@ const ArticlesList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [articles, setArticles] = useState([]); 
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       const fetchData  = async () => {
@@ -16,13 +17,18 @@ const ArticlesList = () => {
           const res = await getAllArticles(currentPage);
           const {articles, articlesCount} = res
           setArticles(articles);
-          setTotalPages(Math.ceil(articlesCount/5))
+          setTotalPages(Math.ceil(articlesCount/5));
+          setLoading(false);
         } catch (error) {
           console.error('Error fetching articles:', error);
         }
       }
       fetchData();
     }, [currentPage]);
+
+    if (loading) {
+      return <span className={styles.loader}></span>;
+    }
   
     const createArticle = articles.map((article) => {
             return (
