@@ -58,3 +58,8 @@
 .signUp span {
   color: #1890ff;
 }
+
+.error {
+  font-size: 14px;
+  color: #F5222D;
+}

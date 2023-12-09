@@ -4,6 +4,7 @@ import Markdown from 'markdown-to-jsx';
 import PropTypes from 'prop-types';
 import style from './ArticleItem.module.css';
 import { formatDate } from '../../../utils';
+import * as ROUTES from '../../../constans/routers';
 
 const ArticleItem = ({
   slug,
@@ -20,7 +21,7 @@ const ArticleItem = ({
       <header className={style.articleHeader}>
         <div className={style.contentTable}>
           <div className={style.title}>
-            <Link to={`/articles/${slug}`}>
+            <Link to={`${ROUTES.ARTICLES}/${slug}`}>
               <h3 className={style.articleTitle}>{title}</h3>
             </Link>
             <span className={style.articleLike}>{likeCount}</span>

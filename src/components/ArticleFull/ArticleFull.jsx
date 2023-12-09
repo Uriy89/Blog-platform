@@ -12,7 +12,6 @@ const ArticleFull = (props) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('1 вызов');
     const fetchData = async (slug) => {
       try {
         const res = await getArticleBySlug(slug);

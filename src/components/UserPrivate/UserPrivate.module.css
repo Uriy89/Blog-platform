@@ -1,0 +1,47 @@
+.userButtons {
+  background-color: #fff;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 27px;
+  margin-right: 27px;
+}
+
+.title {
+  margin-left: 30px;
+  font-size: 18px;
+}
+
+.headerButtons {
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
+  align-items: center;
+  gap: 16px;
+}
+
+.createArticle {
+  color: rgba(82, 196, 26, 1);
+  border: 1px solid rgba(82, 196, 26, 1);
+  border-radius: 5px;
+  padding: 6px 18px;
+}
+
+.profile span {
+  position: relative;
+  bottom: 15px;
+  padding-right: 5px;
+}
+
+.profile img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+
+.logOut {
+  color: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.85);
+  padding: 6px 18px;
+  border-radius: 5px;
+}

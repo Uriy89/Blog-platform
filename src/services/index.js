@@ -1,11 +1,13 @@
 import axios from 'axios';
+import * as SERVICES from '../constans/services';
 
-const ROOT_URL = 'https://blog.kata.academy/api/';
-const LIMIT = 5;
+const token = localStorage.getItem('token');
 
 export const getAllArticles = async (offset = 0) => {
   try {
-    const response = await axios.get(ROOT_URL + `articles?limit=${LIMIT}&offset=${offset}`);
+    const response = await axios.get(
+      SERVICES.ROOT_URL + `articles?limit=${SERVICES.LIMIT}&offset=${offset}`
+    );
     return response.data;
   } catch (error) {
     console.error('Error occurred when receiving all articles: ', error);
@@ -15,10 +17,57 @@ export const getAllArticles = async (offset = 0) => {
 
 export const getArticleBySlug = async (slug) => {
   try {
-    const response = await axios.get(ROOT_URL + `articles/${slug}`);
+    const response = await axios.get(SERVICES.ROOT_URL + `articles/${slug}`);
     return response.data;
   } catch (error) {
     console.error('Error occurred when receiving all articles: ', error);
     throw error;
   }
 };
+
+export const postCreateUser = async (user) => {
+  try {
+    const response = await axios.post(SERVICES.ROOT_URL + SERVICES.USERS, user);
+    return { data: response.data, error: null };
+  } catch (error) {
+    if (error.response) {
+      return { data: null, error: error.response.data };
+    } else {
+      console.error('Error:', error);
+      return { data: null, error: 'An unexpected error occurred.' };
+    }
+  }
+};
+
+export const loginUser = async (user) => {
+  try {
+    const response = await axios.post(SERVICES.ROOT_URL + SERVICES.LOGIN, user);
+    return { data: response.data, error: null };
+  } catch (error) {
+    if (error.response) {
+      return { data: null, error: error.response.data };
+    } else {
+      console.error('Error:', error);
+      return { data: null, error: 'An unexpected error occurred.' };
+    }
+  }
+};
+
+
+export const changeUserData = async (data) => {
+  try {
+    const response = await axios.put(SERVICES.ROOT_URL + SERVICES.USER, data, {
+      headers: {
+        Authorization: `Token ${token}`,
+      }
+    });
+    return { data: response.data, error: null };
+  } catch (error) {
+    if (error.response) {
+      return { data: null, error: error.response.data };
+    } else {
+      console.error('Error:', error);
+      return { data: null, error: 'An unexpected error occurred.' };
+    }
+  }
+}
