@@ -22,14 +22,14 @@ const Header = ({ isAuthorized, handleLogout, username, image }) => {
           </Link>
         </div>
       ) : (
-        <UserPrivate handleLogout={handleLogout} username={username} image={image}/>
+        <UserPrivate handleLogout={handleLogout} username={username} image={image} />
       )}
     </>
   );
 };
 
 Header.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
+  isAuthorized: PropTypes.bool.isRequired
 };
 
 export default Header;

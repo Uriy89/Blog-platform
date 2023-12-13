@@ -1,5 +1,5 @@
-.signIn {
-  width: 320px;
+.editProfile {
+  width: 874px;
   height: auto;
   background-color: #fff;
   box-shadow:
@@ -19,10 +19,8 @@
 }
 
 .title {
-  width: 80px;
-  margin: 0 auto;
-  display: block;
-  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
 }
 
 .form {
@@ -30,6 +28,7 @@
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 6px;
 }
 
 .label {
@@ -43,10 +42,14 @@
   border-radius: 4px;
   padding: 8px 12px;
   border: 1px solid #d9d9d9;
-  margin-bottom: 12px;
 }
 
-.login {
+textarea {
+  min-height: 168px;
+}
+
+.send {
+  width: 287px;
   margin-top: 20px;
   background-color: #1890ff;
   border-radius: 4px;
@@ -54,19 +57,43 @@
   padding: 8px 16px;
 }
 
-.signUp {
-  display: block;
-  font-size: 12px;
-  color: #8c8c8c;
-  text-align: center;
-  margin-top: 5px;
-}
-
-.signUp span {
-  color: #1890ff;
-}
-
 .error {
   font-size: 14px;
   color: #f5222d;
+}
+
+.tags {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  display: flex;
+  gap: 18px;
+}
+
+.tagInput {
+  width: 300px;
+  border-radius: 4px;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+}
+
+.btnDelete {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #f5222d;
+  color: #f5222d;
+}
+
+.btnAdd {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #1890ff;
+  color: #1890ff;
 }

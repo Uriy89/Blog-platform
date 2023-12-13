@@ -18,6 +18,13 @@
   padding: 32px;
 }
 
+.title {
+  width: 227px;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 20px;
+}
+
 .form {
   display: flex;
   flex-direction: column;

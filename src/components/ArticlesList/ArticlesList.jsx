@@ -11,53 +11,55 @@ const ArticlesList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getAllArticles(currentPage);
-        const { articles, articlesCount } = res;
-        setArticles(articles);
-        setTotalPages(Math.ceil(articlesCount / 5));
+    getAllArticles(currentPage)
+      .then((body) => {
+        setArticles(body.articles);
+        setTotalPages(body.articlesCount);
         setLoading(false);
-      } catch (error) {
-        console.error('Error fetching articles:', error);
-      }
-    };
-    fetchData();
+      })
+      .catch((err) => console.log(err));
   }, [currentPage]);
 
   if (loading) {
     return <span className={styles.loader}></span>;
   }
 
-  const createArticle = articles.map((article) => {
-    return (
-      <ArticleItem
-        key={article.slug}
-        slug={article.slug}
-        title={article.title}
-        description={article.description}
-        body={article.body}
-        tagList={article.tagList}
-        likeCount={article.favoritesCount}
-        username={article.author.username}
-        image={article.author.image}
-        updatedAt={article.updatedAt}
-      />
-    );
-  });
+  const onChangePage = (page) => {
+    getAllArticles(page)
+      .then((body) => {
+        setArticles(body.articles);
+        setTotalPages(body.articlesCount);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+    setCurrentPage(page);
+  }
 
   return (
     <div className={styles.articlesList}>
-      {createArticle}
+      {articles.map((article) => (
+          <ArticleItem
+            key={article.slug}
+            slug={article.slug}
+            title={article.title}
+            description={article.description}
+            body={article.body}
+            tagList={article.tagList}
+            likeCount={article.favoritesCount}
+            username={article.author.username}
+            image={article.author.image}
+            updatedAt={article.updatedAt}
+          />
+      ))}
       <div className={styles.pagination}>
         <Pagination
-          defaultCurrent={0}
-          pageSize={1}
+          defaultCurrent={1}
           total={totalPages}
-          onChange={(page) => setCurrentPage(page)}
+          onChange={onChangePage}
           showSizeChanger={false}
           itemActiveBg={'#1890FF'}
           className={styles.pagin}
+          currentPage={currentPage}
         />
       </div>
     </div>

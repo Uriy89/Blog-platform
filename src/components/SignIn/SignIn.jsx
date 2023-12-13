@@ -5,13 +5,10 @@ import { useForm } from 'react-hook-form';
 import { loginUser } from '../../services';
 import * as ROUTES from '../../constans/routers';
 
-const SignIn = ({ handleUserData }) => {
+const SignIn = ({ handleUserData, handleEdditProfile }) => {
   const history = useHistory();
   const [err, setErr] = useState(false);
-  const {
-    register,
-    handleSubmit
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: 'onBlur'
   });
 
@@ -22,8 +19,9 @@ const SignIn = ({ handleUserData }) => {
         console.error('Error in loginUser:', responseError.errors);
         setErr(true);
       } else {
-        const {username, email, token} = responseData.user
-        handleUserData(token, username, email);
+        const { username, email, token, image } = responseData.user;
+        handleUserData(token, username, email, image);
+        handleEdditProfile(username, image);
         setErr(false);
         history.push(ROUTES.ROOT);
       }
@@ -35,7 +33,7 @@ const SignIn = ({ handleUserData }) => {
   return (
     <section className={style.signIn}>
       <div className={style.wrapper}>
-        <h2 className={style.title}>Create new account</h2>
+        <h2 className={style.title}>Sign In</h2>
         <form className={style.form} onSubmit={handleSubmit(onSubmitHandler)}>
           <label className={style.label}>
             Email address

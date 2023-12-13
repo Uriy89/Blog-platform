@@ -10,9 +10,11 @@ const EditProfile = (props) => {
   const { handleUserData, handleEdditProfile } = props;
   const username = localStorage.getItem(SERVICES.USER_NAME);
   const useremail = localStorage.getItem(SERVICES.EMAIL);
+  const image = localStorage.getItem(SERVICES.IMAGE);
   const history = useHistory();
   const [err, setErr] = useState({});
-  
+
+
   const {
     register,
     formState: { errors },
@@ -22,8 +24,9 @@ const EditProfile = (props) => {
     defaultValues: {
       username: username || '',
       email: useremail || '',
-      password: ''
-    },
+      password: '',
+      image: image || ''
+    }
   });
 
   const onSubmitHandler = async (data) => {
@@ -32,8 +35,7 @@ const EditProfile = (props) => {
       if (responseData.error) {
         console.error('Error in loginUser:', responseData.data);
       } else {
-        const {username, email, token, image} = responseData.data.user
-        console.log(responseData.data.user);
+        const { username, email, token, image } = responseData.data.user;
         handleUserData(token, username, email, image);
         handleEdditProfile(username, image);
         history.push(ROUTES.ROOT);
@@ -42,13 +44,13 @@ const EditProfile = (props) => {
       console.log('Unexpected Error:', error);
     }
   };
-  
+
   return (
     <section className={style.editProfile}>
       <div className={style.wrapper}>
-        <h2 className={style.title}>Create new account</h2>
+        <h2 className={style.title}>Eddit profile</h2>
         <form className={style.form} onSubmit={handleSubmit(onSubmitHandler)}>
-        <label className={style.label}>
+          <label className={style.label}>
             Username
             <input
               type="text"
@@ -100,11 +102,7 @@ const EditProfile = (props) => {
             <input
               type="password"
               {...register('password', {
-                required: true,
-                minLength: {
-                  value: 6,
-                  message: 'Your password needs to be at least 6 characters.'
-                }
+                required: false
               })}
               name="password"
               placeholder="New password"
@@ -116,11 +114,11 @@ const EditProfile = (props) => {
           </div>
           <label className={style.label}>
             Avatar image (url)
-            <input 
-              type="text" 
+            <input
+              type="text"
               {...register('image')}
               placeholder="Avatar image"
-              className={style.input}  
+              className={style.input}
             />
           </label>
           <button className={style.save}>Save</button>

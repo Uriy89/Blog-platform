@@ -6,6 +6,8 @@
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
   margin: 0 auto;
   margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .articleHeader {
@@ -66,18 +68,25 @@
 
 .userTable {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
 }
 
 .userInfo {
   display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.span {
+  display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: end;
 }
 
 .datePublication {
-  position: absolute;
-  transform: translateY(30px);
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -86,11 +95,33 @@
 .userName {
   font-size: 18px;
   font-weight: 400;
+  align-items: end;
 }
 
 .userAvatar {
   width: 46px;
   height: 46px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnDelete {
+  padding: 6px 17px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #f5222d;
+  color: #f5222d;
+}
+
+.btnAdd {
+  padding: 6px 17px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #1890ff;
+  color: #1890ff;
 }
 
 .datePublication {
@@ -100,10 +131,8 @@
   font-weight: 400;
 }
 
-.bodyContent {
-  width: 682px;
+.description {
   font-size: 12px;
-  padding-left: 16px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -112,6 +141,7 @@
 .fullContent {
   padding-left: 16px;
   padding-top: 26px;
+  padding-bottom: 20px;
 }
 
 .loader {
