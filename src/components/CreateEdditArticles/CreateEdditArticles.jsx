@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { createNewArticle } from '../../services';
 import * as ROUTES from '../../constans/routers';
-import { message } from 'antd';
 
 const CreateEdditArticles = () => {
   const [tags, setTags] = useState([]);
