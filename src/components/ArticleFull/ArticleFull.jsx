@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import style from './ArticleFull.module.css';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { getArticleBySlug, deleteArticle, postFavorited, deleteFavorited } from '../../services';
+import { getArticleBySlug, deleteArticle } from '../../services';
 import Markdown from 'markdown-to-jsx';
 import { formatDate } from '../../utils';
 import * as ROUTES from '../../constans/routers';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
+import { Popconfirm, message  } from 'antd';
 
 const ArticleFull = (props) => {
   const { slug, username, onIsArticleEdit } = props;
   const [data, setData] = useState({});
   const [author, setAuthor] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -30,18 +31,35 @@ const ArticleFull = (props) => {
     fetchData(slug);
   }, [slug]);
 
-  const onDeleteHandler = async (slug) => {
-    try {
-      await deleteArticle(slug);
-      history.push(ROUTES.ROOT);
-    } catch (error) {
-      console.error('Error fetching articles:', error);
-    }
-  };
+  //const onDeleteHandler = async (slug) => {
+  //  try {
+  //    await deleteArticle(slug);
+  //    history.push(ROUTES.ROOT);
+  //  } catch (error) {
+  //    console.error('Error fetching articles:', error);
+  //  }
+  //};
 
   if (loading) {
     return <span className={style.loader}></span>;
   }
+  
+  const confirm = () => {
+    deleteArticle(data.slug)
+      .then((body) => {
+        setError(false);
+      })
+      .catch(() => setError(true));
+
+    if (!error) {
+      message.success('Article deleted');
+      history.push('/');
+    }
+  };
+
+  const push = () => {
+    history.push(`/articles/${data.slug}`);
+  };
 
   return (
     <section className={style.section}>
@@ -72,13 +90,16 @@ const ArticleFull = (props) => {
           </div>
           {username === author.username ? (
             <div className={style.buttons}>
-              <button
-                type="button"
-                className={style.btnDelete}
-                onClick={() => onDeleteHandler(slug)}
+              <Popconfirm
+                placement={'right'}
+                title="Are you sure to delete this task?"
+                onConfirm={confirm}
+                onCancel={push}
+                okText="Yes"
+                cancelText="No"
               >
-                Delete
-              </button>
+                <button type="button" className={style.btnDelete}>Delete</button>
+              </Popconfirm>
               <Link to={`/articles/${data.slug}/edit`}>
                 <button type="button" className={style.btnAdd} onClick={() => {
                   onIsArticleEdit(true);

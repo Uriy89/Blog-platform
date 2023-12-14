@@ -10,7 +10,6 @@ const EditProfile = (props) => {
   const { handleUserData, handleEdditProfile } = props;
   const username = localStorage.getItem(SERVICES.USER_NAME);
   const useremail = localStorage.getItem(SERVICES.EMAIL);
-  const image = localStorage.getItem(SERVICES.IMAGE);
   const history = useHistory();
   const [err, setErr] = useState({});
 

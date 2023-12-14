@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import style from './ArticleItem.module.css';
 import { formatDate } from '../../../utils';
 import * as ROUTES from '../../../constans/routers';
-import { Popconfirm, message } from 'antd';
 import { postFavorited, deleteFavorited } from '../../../services';
 import classNames from 'classnames';
 
