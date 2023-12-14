@@ -116,11 +116,14 @@ const EditProfile = (props) => {
             Avatar image (url)
             <input
               type="text"
-              {...register('image')}
+              {...register('image', { required: 'This field is required' })}
               placeholder="Avatar image"
               className={style.input}
             />
           </label>
+          <div className={style.error}>
+            {errors?.image && <p>{errors?.image?.message}</p>}
+          </div>
           <button className={style.save}>Save</button>
         </form>
       </div>

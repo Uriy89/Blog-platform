@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as SERVICES from '../constans/services';
 
+const token = localStorage.getItem('token');
+
 export const getAllArticles =  async (offset = 0, limit = 5) => {
   const articles = await axios
     .get(SERVICES.ROOT_URL + SERVICES.ARTICLES, { params: { offset, limit } })
@@ -52,7 +54,7 @@ export const loginUser = async (user) => {
   }
 };
 
-export const changeUserData = async (data, token) => {
+export const changeUserData = async (data) => {
   try {
     const response = await axios.put(SERVICES.ROOT_URL + SERVICES.USER, data, {
       headers: {
@@ -91,7 +93,6 @@ export const createNewArticle = async (data, token) => {
 
 
 export const deleteArticle = async (slug) => {
-  const token = localStorage.getItem('token');
   try {
     const response = await axios.delete(`${SERVICES.ROOT_URL}${SERVICES.ARTICLES}/${slug}`, {
       headers: {
@@ -106,7 +107,6 @@ export const deleteArticle = async (slug) => {
 };
 
 export const editArticle = async (slug, data) => {
-  const token = localStorage.getItem('token');
   try {
     const response = await axios.put(`${SERVICES.ROOT_URL}${SERVICES.ARTICLES}/${slug}`, data, {
       headers: {

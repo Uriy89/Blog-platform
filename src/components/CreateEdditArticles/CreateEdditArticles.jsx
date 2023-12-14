@@ -19,11 +19,20 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
     handleSubmit,
     unregister,
     setValue,
+    reset
   } = useForm({
-    mode: 'onBlur'
+    mode: 'onBlur',
+    defaultValues: {
+      title: '',
+      description: '',
+      body: '',
+      tags0: '', // Add initial value for tags
+    },
   });
 
   useEffect(() => {
+    reset()
+    setTags([])
     if (slug) {
       getArticleBySlug(slug)
       .then((element) => {
