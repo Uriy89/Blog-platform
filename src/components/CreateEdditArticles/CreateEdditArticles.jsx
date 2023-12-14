@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import style from './CreateEdditArticles.module.css';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-import { createNewArticle } from '../../services';
+import { useHistory, useParams } from 'react-router-dom';
+import { createNewArticle, getArticleBySlug, editArticle } from '../../services';
 import * as ROUTES from '../../constans/routers';
 
-const CreateEdditArticles = () => {
+const CreateEdditArticles = ({ isArticleEdit }) => {
+  const { slug } = useParams();
   const [tags, setTags] = useState([]);
   const [tagValue, setTagValue] = useState('');
   const history = useHistory();
@@ -16,26 +17,46 @@ const CreateEdditArticles = () => {
     register,
     formState: { errors },
     handleSubmit,
-    unregister
+    unregister,
+    setValue,
   } = useForm({
     mode: 'onBlur'
   });
 
-  const onSubmitHandler = async (data) => {
-    const { body, description, title, ...tags } = data;
-    const allTags = Object.entries(tags).map((el) => el[1]);
-    const tagList = allTags.filter((element) => element.trim() !== '');
-    const newData = { body, description, title, tagList };
-    try {
-      const responseData = await createNewArticle({ article: newData }, token);
-      if (responseData.error) {
-        console.error('Error in loginUser:', responseData.newData);
-      } else {
-        history.push(ROUTES.ARTICLES);
-      }
-    } catch (error) {
-      console.log('Unexpected Error:', error);
+  useEffect(() => {
+    if (slug) {
+      getArticleBySlug(slug)
+      .then((element) => {
+        setValue('title', element.article.title);
+        setValue('description', element.article.description);
+        setValue('body', element.article.body);
+        setTags(
+          element.article.tagList.map((item) => {
+            return { value: item, id: String(maxId.current++) };
+          })
+        );
+
+      })
+      .catch(() => console.log(true));
     }
+  }, [slug])
+
+
+  const onSubmitHandler = (data) => {
+      const { body, description, title, ...tags } = data;
+      const allTags = Object.entries(tags).map((el) => el[1]);
+      const tagList = [...new Set(allTags.filter((element) => element.trim() !== ''))];
+      const newData = { body, description, title, tagList };
+      if(!slug) {
+        createNewArticle({ article: newData }, token)
+          .then(() => history.push(ROUTES.ARTICLES))
+          .catch((err) => console.error('Create article error: ', err))
+      } else {
+        console.log('edit: ', newData)
+        editArticle(slug, { article: newData })
+          .then((data) => history.push(ROUTES.ROOT))
+          .catch((err) => console.error('Edit article error: ', err));
+      }
   };
 
   const deleteTag = (id) => {
@@ -55,24 +76,18 @@ const CreateEdditArticles = () => {
     <section className={style.editProfile}>
       <div className={style.wrapper}>
         <div className={style.title}>
-          <h2>Create new article</h2>
+          <h2>{isArticleEdit ? 'Edit article' : 'Create new article'}</h2>
         </div>
         <form className={style.form} onSubmit={handleSubmit(onSubmitHandler)}>
           <label className={style.label}>
             Title
             <input
               type="text"
-              name="title"
+              id="title"
+              autoFocus
               placeholder="Title"
               className={style.input}
-              {...register('title', {
-                required: true,
-                defaultChecked: true,
-                minLength: {
-                  value: 1,
-                  message: 'title is a required field'
-                }
-              })}
+              {...register('title')}
             />
           </label>
           <div className={style.error}>{errors?.title && <p>{errors?.title?.message}</p>}</div>
@@ -80,17 +95,10 @@ const CreateEdditArticles = () => {
             Short description
             <input
               type="text"
-              name="description"
+              id="description"
               placeholder="Short description"
               className={style.input}
-              {...register('description', {
-                required: true,
-                defaultChecked: true,
-                minLength: {
-                  value: 1,
-                  message: 'description is a required field'
-                }
-              })}
+              {...register('description')}
             />
           </label>
           <div className={style.error}>
@@ -99,17 +107,10 @@ const CreateEdditArticles = () => {
           <label className={style.label}>
             Text
             <textarea
-              name="body"
+              id="body"
               placeholder="Text"
               className={style.input}
-              {...register('body', {
-                required: true,
-                defaultChecked: true,
-                minLength: {
-                  value: 1,
-                  message: 'body is a required field'
-                }
-              })}
+              {...register('body')}
             />
           </label>
           <div className={style.error}>{errors?.body && <p>{errors?.body?.message}</p>}</div>

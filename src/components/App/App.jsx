@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styles from './App.module.css';
 import * as ROUTES from '../../constans/routers';
 import * as SERVICES from '../../constans/services';
@@ -18,6 +18,7 @@ const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [username, setUsername] = useState(localStorage.getItem(SERVICES.USER_NAME));
   const [image, setImage] = useState(localStorage.getItem(SERVICES.IMAGE));
+  const [isArticleEdit, setIsArticleEdit] = useState(false);
 
   const handleUserData = (token, username, email, image) => {
     localStorage.setItem(SERVICES.TOKEN, token);
@@ -39,6 +40,10 @@ const App = () => {
     setUsername(username);
     setImage(image);
   };
+
+  const onIsArticleEdit = (value) => {
+    setIsArticleEdit(value);
+  }
 
   useEffect(() => {
     const token = localStorage.getItem(SERVICES.TOKEN);
@@ -68,8 +73,8 @@ const App = () => {
           </div>
         ) : (
           <div className={style.userButtons}>
-            <Link to={ROUTES.NEW_AERTICLE}>
-              <button type="button" className={style.createArticle}>
+            <Link to={ROUTES.NEW_ARTICLE}>
+              <button type="button" className={style.createArticle} onClick={() => onIsArticleEdit(false)}>
                 Create article
               </button>
             </Link>
@@ -88,11 +93,11 @@ const App = () => {
         )}
       </header>
       <div className="wrapper">
-        <Switch>
           <Route path={[ROUTES.ROOT, ROUTES.ARTICLES]} exact component={() => <ArticlesList />} />
           <Route
+            exact
             path={ROUTES.ARTICLES_SLUG}
-            component={({ match }) => <ArticleFull slug={match.params.slug} username={username} />}
+            component={({ match }) => <ArticleFull slug={match.params.slug} username={username} onIsArticleEdit={onIsArticleEdit}/>}
           />
           <Route path={ROUTES.SIGN_UP} render={() => <SignUp />} />
           <Route
@@ -113,9 +118,11 @@ const App = () => {
             redirectTo={ROUTES.SIGN_IN}
             component={CreateEdditArticles}
             isAuthorized={isAuthorized}
-            path={ROUTES.NEW_AERTICLE}
+            path={isArticleEdit ? ROUTES.EDIT_ARTICLE : ROUTES.NEW_ARTICLE}
+            onIsArticleEdit={onIsArticleEdit}
+            isArticleEdit={isArticleEdit}
           />
-        </Switch>
+          
       </div>
     </Router>
   );

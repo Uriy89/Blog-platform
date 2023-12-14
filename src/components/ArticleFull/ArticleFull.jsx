@@ -6,9 +6,10 @@ import { getArticleBySlug, deleteArticle } from '../../services';
 import Markdown from 'markdown-to-jsx';
 import { formatDate } from '../../utils';
 import * as ROUTES from '../../constans/routers';
+import { Link } from 'react-router-dom';
 
 const ArticleFull = (props) => {
-  const { slug, username } = props;
+  const { slug, username, onIsArticleEdit } = props;
   const [data, setData] = useState({});
   const [author, setAuthor] = useState('');
   const [loading, setLoading] = useState(true);
@@ -28,9 +29,9 @@ const ArticleFull = (props) => {
     fetchData(slug);
   }, [slug]);
 
-  const onSubmitHandler = async (slug) => {
+  const onDeleteHandler = async (slug) => {
     try {
-      const res = await deleteArticle(slug);
+      await deleteArticle(slug);
       history.push(ROUTES.ROOT);
     } catch (error) {
       console.error('Error fetching articles:', error);
@@ -73,13 +74,17 @@ const ArticleFull = (props) => {
               <button
                 type="button"
                 className={style.btnDelete}
-                onClick={() => onSubmitHandler(slug)}
+                onClick={() => onDeleteHandler(slug)}
               >
                 Delete
               </button>
-              <button type="button" className={style.btnAdd}>
-                Edit
-              </button>
+              <Link to={`/articles/${data.slug}/edit`}>
+                <button type="button" className={style.btnAdd} onClick={() => {
+                  onIsArticleEdit(true);
+                }}>
+                  Edit
+                </button>
+              </Link>
             </div>
           ) : null}
         </div>

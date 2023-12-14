@@ -7,6 +7,9 @@ const PrivateRouter = ({
   isAuthorized,
   handleUserData,
   handleEdditProfile,
+  onIsArticleEdit,
+  isArticleEdit,
+
   ...rest
 }) => {
   return (
@@ -18,6 +21,8 @@ const PrivateRouter = ({
             {...props}
             handleUserData={handleUserData}
             handleEdditProfile={handleEdditProfile}
+            onIsArticleEdit={() => onIsArticleEdit()}
+            isArticleEdit={isArticleEdit}
           />
         ) : (
           <Redirect to={{ pathname: redirectTo, state: { from: props.location } }} />
