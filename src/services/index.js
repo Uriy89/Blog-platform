@@ -5,8 +5,10 @@ const token = localStorage.getItem('token');
 
 export const getAllArticles =  async (offset = 0, limit = 5) => {
   const articles = await axios
-    .get(SERVICES.ROOT_URL + SERVICES.ARTICLES, { params: { offset, limit } })
-    .then((res) => res.data)
+    .get(SERVICES.ARTICLES, { params: { offset, limit } })
+    .then((res) => {
+      return res.data
+    })
     .catch((error) => {
       throw error
     })
@@ -15,86 +17,47 @@ export const getAllArticles =  async (offset = 0, limit = 5) => {
 }
 
 export const getArticleBySlug = async (slug) => {
-  try {
-    const response = await axios.get(`${SERVICES.ROOT_URL}${SERVICES.ARTICLES}/${slug}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error occurred when receiving all articles: ', error);
-    throw error;
-  }
+  const response = await axios.get(`${SERVICES.ARTICLES}/${slug}`);
+  return response.data;
 };
 
 export const postCreateUser = async (user) => {
-  try {
     const response = await axios.post(SERVICES.ROOT_URL + SERVICES.USERS, user, {
       headers: { 'Cache-Control': 'no-cache' }
     });
     return { data: response.data, error: null };
-  } catch (error) {
-    if (error.response) {
-      return { data: null, error: error.response.data };
-    } else {
-      console.error('Error:', error);
-      return { data: null, error: 'An unexpected error occurred.' };
-    }
-  }
 };
 
 export const loginUser = async (user) => {
-  try {
-    const response = await axios.post(SERVICES.ROOT_URL + SERVICES.LOGIN, user);
-    return { data: response.data, error: null };
-  } catch (error) {
-    if (error.response) {
-      return { data: null, error: error.response.data };
-    } else {
-      console.error('Error:', error);
-      return { data: null, error: 'An unexpected error occurred.' };
-    }
-  }
+  const response = await axios.post(SERVICES.ROOT_URL + SERVICES.LOGIN, user);
+  return { data: response.data, error: null };
 };
 
 export const changeUserData = async (data) => {
-  try {
     const response = await axios.put(SERVICES.ROOT_URL + SERVICES.USER, data, {
       headers: {
         Authorization: `Token ${token}`
       }
     });
     return { data: response.data, error: null };
-  } catch (error) {
-    if (error.response) {
-      return { data: null, error: error.response.data };
-    } else {
-      console.error('Error:', error);
-      return { data: null, error: 'An unexpected error occurred.' };
-    }
-  }
 };
 
 
 export const createNewArticle = async (data, token) => {
-  try {
-     const response = await axios.post(`${SERVICES.ROOT_URL}${SERVICES.ARTICLES}`, data, {
+  await axios.post(`${SERVICES.ARTICLES}`, data, {
       headers: {
         Authorization: `Token ${token}`
       }
-    });
-    return { data: response.data, error: null };
-  } catch (error) {
-    if (error.response) {
-      return { data: null, error: error.response.data };
-    } else {
-      console.error('Error:', error);
-      return { data: null, error: 'An unexpected error occurred.' };
-    }
-  }
+  })
+  .then((response) => response.data)
+  .catch((err) => console.error(err))
+  
 };
 
 
 export const deleteArticle = async (slug) => {
   try {
-    const response = await axios.delete(`${SERVICES.ROOT_URL}${SERVICES.ARTICLES}/${slug}`, {
+    const response = await axios.delete(`${SERVICES.ARTICLES}/${slug}`, {
       headers: {
         Authorization: `Token ${token}`
       }
@@ -108,7 +71,7 @@ export const deleteArticle = async (slug) => {
 
 export const editArticle = async (slug, data) => {
   try {
-    const response = await axios.put(`${SERVICES.ROOT_URL}${SERVICES.ARTICLES}/${slug}`, data, {
+    const response = await axios.put(`${SERVICES.ARTICLES}/${slug}`, data, {
       headers: {
         Authorization: `Token ${token}`
       }
@@ -120,3 +83,22 @@ export const editArticle = async (slug, data) => {
   }
 };
 
+export const postFavorited = async (slug) => {
+  await axios.post(`${SERVICES.ARTICLES}/${slug}/favorite`, '', {
+    headers: {
+      Authorization: `Token ${token}`
+    }
+  })
+  .then(() => true)
+  .catch((e) => console.error(e))
+};
+
+export const deleteFavorited = async (slug) => {
+  await axios.delete(`${SERVICES.ARTICLES}/${slug}/favorite`, {
+    headers: {
+      Authorization: `Token ${token}`
+    }
+  })
+  .then(() => true)
+  .catch((e) => console.error(e))
+};

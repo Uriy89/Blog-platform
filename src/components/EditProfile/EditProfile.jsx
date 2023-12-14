@@ -24,8 +24,7 @@ const EditProfile = (props) => {
     defaultValues: {
       username: username || '',
       email: useremail || '',
-      password: '',
-      image: image || ''
+      password: ''
     }
   });
 

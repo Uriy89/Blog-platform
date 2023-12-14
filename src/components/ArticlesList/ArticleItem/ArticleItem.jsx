@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Markdown from 'markdown-to-jsx';
 import PropTypes from 'prop-types';
 import style from './ArticleItem.module.css';
 import { formatDate } from '../../../utils';
 import * as ROUTES from '../../../constans/routers';
+import { Popconfirm, message } from 'antd';
+import { postFavorited, deleteFavorited } from '../../../services';
+import classNames from 'classnames';
 
 const ArticleItem = ({
   slug,
@@ -14,8 +17,28 @@ const ArticleItem = ({
   tagList,
   likeCount,
   username,
-  image
+  image,
+  isAuthorized,
+  favorited
 }) => {
+
+  const [like, setLike] = useState(likeCount);
+  const [active, setActive] = useState(favorited);
+
+  const onLike = () => {
+    if(isAuthorized)  {
+      setActive((active) => !active);
+      setLike(() => (active ? like - 1 : like + 1))
+      !active ? postFavorited(slug) : deleteFavorited(slug);
+    }
+  }
+
+  const heart = classNames({
+    [style.articleLike]: !favorited,
+    [style.articleLikeRed]: favorited,
+  });
+
+
   return (
     <article className={style.article} key={slug}>
       <header className={style.articleHeader}>
@@ -24,7 +47,7 @@ const ArticleItem = ({
             <Link to={`${ROUTES.ARTICLES}/${slug}`}>
               <h3 className={style.articleTitle}>{title}</h3>
             </Link>
-            <span className={style.articleLike}>{likeCount}</span>
+            <span className={heart} onClick={onLike}>{like}</span>
           </div>
           <div className={style.tags}>
             {tagList.map((tag, index) => (

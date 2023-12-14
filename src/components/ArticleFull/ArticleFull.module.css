@@ -41,20 +41,29 @@
 
 
 .title h3 {
-  width: 90%;
   overflow: hidden;
 }
 
 .articleLike {
   color: rgba(0, 0, 0, 0.75);
-  display: block;
   font-size: 14px;
-
-  
 }
+
+.articleLikeRed {
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 14px;
+}
+
 
 .articleLike::before {
   content: url('../../assets/images/heart.svg');
+  position: relative;
+  top: 2px;
+  right: 1px;
+}
+
+.articleLikeRed::before {
+  content: url('../../assets/images/redHeart.svg');
   position: relative;
   top: 2px;
   right: 1px;

@@ -26,7 +26,7 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
       title: '',
       description: '',
       body: '',
-      tags0: '', // Add initial value for tags
+      tags0: '',
     },
   });
 
@@ -61,9 +61,8 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
           .then(() => history.push(ROUTES.ARTICLES))
           .catch((err) => console.error('Create article error: ', err))
       } else {
-        console.log('edit: ', newData)
         editArticle(slug, { article: newData })
-          .then((data) => history.push(ROUTES.ROOT))
+          .then(() => history.push(ROUTES.ROOT))
           .catch((err) => console.error('Edit article error: ', err));
       }
   };

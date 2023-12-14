@@ -8,11 +8,11 @@ import ArticlesList from '../ArticlesList';
 import EditProfile from '../EditProfile';
 import ArticleFull from '../ArticleFull';
 import CreateEdditArticles from '../CreateEdditArticles';
-//import UserPrivate from '../UserPrivate';
 import style from '../UserPrivate/UserPrivate.module.css';
+import d from '../../assets/images/noava.png';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
-//import Header from '../Header';
+
 
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -81,7 +81,7 @@ const App = () => {
             <Link to={ROUTES.PROFILE}>
               <button type="button" className={style.profile}>
                 <span>{username}</span>
-                <img src={image} alt="Avatar" />
+                <img src={!!image ? image : d} alt="Avatar" />
               </button>
             </Link>
             <Link to={ROUTES.ROOT}>
@@ -93,7 +93,7 @@ const App = () => {
         )}
       </header>
       <div className="wrapper">
-          <Route path={[ROUTES.ROOT, ROUTES.ARTICLES]} exact component={() => <ArticlesList />} />
+          <Route path={[ROUTES.ROOT, ROUTES.ARTICLES]} exact component={() => <ArticlesList isAuthorized={isAuthorized}/>} />
           <Route
             exact
             path={ROUTES.ARTICLES_SLUG}

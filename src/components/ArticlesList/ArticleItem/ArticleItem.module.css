@@ -42,12 +42,26 @@
   font-size: 14px;
 }
 
+.articleLikeRed {
+  font-size: 14px;
+}
+
 .articleLike::before {
   content: url('../../../assets/images/heart.svg');
   position: relative;
   top: 2px;
   right: 1px;
+  cursor: pointer;
 }
+
+.articleLikeRed::before {
+  content: url('../../../assets/images/redHeart.svg');
+  position: relative;
+  top: 2px;
+  right: 1px;
+  cursor: pointer;
+}
+
 
 .tags {
   display: flex;

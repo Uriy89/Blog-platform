@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import style from './ArticleFull.module.css';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { getArticleBySlug, deleteArticle } from '../../services';
+import { getArticleBySlug, deleteArticle, postFavorited, deleteFavorited } from '../../services';
 import Markdown from 'markdown-to-jsx';
 import { formatDate } from '../../utils';
 import * as ROUTES from '../../constans/routers';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 const ArticleFull = (props) => {
   const { slug, username, onIsArticleEdit } = props;

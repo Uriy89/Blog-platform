@@ -7,4 +7,4 @@ export const TOKEN = 'token';
 export const USER_NAME = 'username';
 export const EMAIL = 'email';
 export const IMAGE = 'image';
-export const ARTICLES = 'articles';
+export const ARTICLES = 'https://blog.kata.academy/api/articles';

@@ -4,7 +4,7 @@ import ArticleItem from './ArticleItem';
 import { Pagination } from 'antd';
 import { getAllArticles } from '../../services';
 
-const ArticlesList = () => {
+const ArticlesList = ({ isAuthorized }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [articles, setArticles] = useState([]);
@@ -49,6 +49,8 @@ const ArticlesList = () => {
             username={article.author.username}
             image={article.author.image}
             updatedAt={article.updatedAt}
+            isAuthorized={isAuthorized}
+            favorited={article.favorited}
           />
       ))}
       <div className={styles.pagination}>

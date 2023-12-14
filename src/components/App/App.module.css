@@ -63,3 +63,19 @@ html {
   margin-left: 30px;
   font-size: 18px;
 }
+
+.headerButtons {
+  padding-right: 26px;
+}
+
+.signIn {
+  color: #000;
+  margin-right: 26px;
+}
+
+.signUp {
+  color: #52C41A;
+  border: 1px solid #52C41A;
+  border-radius: 5px;
+  padding: 6px 8px;
+}
