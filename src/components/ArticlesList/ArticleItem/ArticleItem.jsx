@@ -7,6 +7,7 @@ import { formatDate } from '../../../utils';
 import * as ROUTES from '../../../constans/routers';
 import { postFavorited, deleteFavorited } from '../../../services';
 import classNames from 'classnames';
+import { message } from 'antd';
 
 const ArticleItem = ({
   slug,
@@ -29,6 +30,8 @@ const ArticleItem = ({
       setActive((active) => !active);
       setLike(() => (active ? like - 1 : like + 1))
       !active ? postFavorited(slug) : deleteFavorited(slug);
+    } else {
+      message.error('You need is authorized!');
     }
   }
 

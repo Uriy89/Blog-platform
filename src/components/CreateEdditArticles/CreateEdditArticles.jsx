@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { createNewArticle, getArticleBySlug, editArticle } from '../../services';
 import * as ROUTES from '../../constans/routers';
+import { message } from 'antd';
 
 const CreateEdditArticles = ({ isArticleEdit }) => {
   const { slug } = useParams();
@@ -58,7 +59,10 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
       const newData = { body, description, title, tagList };
       if(!slug) {
         createNewArticle({ article: newData }, token)
-          .then(() => history.push(ROUTES.ARTICLES))
+          .then(() => {
+            message.success('Article is create');
+            history.push(ROUTES.ARTICLES)
+          })
           .catch((err) => console.error('Create article error: ', err))
       } else {
         editArticle(slug, { article: newData })

@@ -30,16 +30,7 @@ const ArticleFull = (props) => {
     };
     fetchData(slug);
   }, [slug]);
-
-  //const onDeleteHandler = async (slug) => {
-  //  try {
-  //    await deleteArticle(slug);
-  //    history.push(ROUTES.ROOT);
-  //  } catch (error) {
-  //    console.error('Error fetching articles:', error);
-  //  }
-  //};
-
+  
   if (loading) {
     return <span className={style.loader}></span>;
   }
@@ -53,12 +44,12 @@ const ArticleFull = (props) => {
 
     if (!error) {
       message.success('Article deleted');
-      history.push('/');
+      history.push(ROUTES.ROOT);
     }
   };
 
   const push = () => {
-    history.push(`/articles/${data.slug}`);
+    history.push(`${ROUTES.ARTICLES}/${data.slug}`);
   };
 
   return (
