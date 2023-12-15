@@ -1,1 +1,1 @@
-https://blog-platform-weld.vercel.app/
+https://blog-platform-snowy-phi.vercel.app/
