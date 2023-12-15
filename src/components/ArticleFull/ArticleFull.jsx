@@ -7,7 +7,8 @@ import Markdown from 'markdown-to-jsx';
 import { formatDate } from '../../utils';
 import * as ROUTES from '../../constans/routers';
 import { Link } from 'react-router-dom';
-import { Popconfirm, message  } from 'antd';
+import { Popconfirm, message } from 'antd';
+import classNames from 'classnames';
 
 const ArticleFull = (props) => {
   const { slug, username, onIsArticleEdit } = props;
@@ -15,6 +16,7 @@ const ArticleFull = (props) => {
   const [author, setAuthor] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [active, setActive] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ const ArticleFull = (props) => {
         const res = await getArticleBySlug(slug);
         setData(res.article);
         setAuthor(res.article.author);
+        setActive(res.article.favorited);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching articles:', error);
@@ -30,11 +33,11 @@ const ArticleFull = (props) => {
     };
     fetchData(slug);
   }, [slug]);
-  
+
   if (loading) {
     return <span className={style.loader}></span>;
   }
-  
+
   const confirm = () => {
     deleteArticle(data.slug)
       .then((body) => {
@@ -52,13 +55,18 @@ const ArticleFull = (props) => {
     history.push(`${ROUTES.ARTICLES}/${data.slug}`);
   };
 
+  const heart = classNames({
+    [style.articleLike]: !active,
+    [style.articleLikeRed]: active
+  });
+
   return (
     <section className={style.section}>
       <header className={style.articleHeader}>
         <div className={style.contentTable}>
           <div className={style.title}>
             <h3>{data.title}</h3>
-            <span className={style.articleLike}>{data.favoritesCount}</span>
+            <span className={heart}>{data.favoritesCount}</span>
           </div>
           <div className={style.tags}>
             {data.tagList.map((tag, index) => (
@@ -89,12 +97,18 @@ const ArticleFull = (props) => {
                 okText="Yes"
                 cancelText="No"
               >
-                <button type="button" className={style.btnDelete}>Delete</button>
+                <button type="button" className={style.btnDelete}>
+                  Delete
+                </button>
               </Popconfirm>
               <Link to={`/articles/${data.slug}/edit`}>
-                <button type="button" className={style.btnAdd} onClick={() => {
-                  onIsArticleEdit(true);
-                }}>
+                <button
+                  type="button"
+                  className={style.btnAdd}
+                  onClick={() => {
+                    onIsArticleEdit(true);
+                  }}
+                >
                   Edit
                 </button>
               </Link>

@@ -13,7 +13,6 @@ const EditProfile = (props) => {
   const history = useHistory();
   const [err, setErr] = useState({});
 
-
   const {
     register,
     formState: { errors },
@@ -119,9 +118,7 @@ const EditProfile = (props) => {
               className={style.input}
             />
           </label>
-          <div className={style.error}>
-            {errors?.image && <p>{errors?.image?.message}</p>}
-          </div>
+          <div className={style.error}>{errors?.image && <p>{errors?.image?.message}</p>}</div>
           <button className={style.save}>Save</button>
         </form>
       </div>

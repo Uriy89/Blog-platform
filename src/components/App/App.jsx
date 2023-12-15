@@ -13,7 +13,6 @@ import d from '../../assets/images/noava.png';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
 
-
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [username, setUsername] = useState(localStorage.getItem(SERVICES.USER_NAME));
@@ -43,7 +42,7 @@ const App = () => {
 
   const onIsArticleEdit = (value) => {
     setIsArticleEdit(value);
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem(SERVICES.TOKEN);
@@ -74,13 +73,17 @@ const App = () => {
         ) : (
           <div className={style.userButtons}>
             <Link to={ROUTES.NEW_ARTICLE}>
-              <button type="button" className={style.createArticle} onClick={() => onIsArticleEdit(false)}>
+              <button
+                type="button"
+                className={style.createArticle}
+                onClick={() => onIsArticleEdit(false)}
+              >
                 Create article
               </button>
             </Link>
             <Link to={ROUTES.PROFILE}>
               <button type="button" className={style.profile}>
-                <span>{username}</span>
+                <span className={style.profileName}>{username}</span>
                 <img src={!!image ? image : d} alt="Avatar" />
               </button>
             </Link>
@@ -93,36 +96,46 @@ const App = () => {
         )}
       </header>
       <div className="wrapper">
-          <Route path={[ROUTES.ROOT, ROUTES.ARTICLES]} exact component={() => <ArticlesList isAuthorized={isAuthorized}/>} />
-          <Route
-            exact
-            path={ROUTES.ARTICLES_SLUG}
-            component={({ match }) => <ArticleFull slug={match.params.slug} username={username} onIsArticleEdit={onIsArticleEdit}/>}
-          />
-          <Route path={ROUTES.SIGN_UP} render={() => <SignUp />} />
-          <Route
-            path={ROUTES.SIGN_IN}
-            render={() => (
-              <SignIn handleUserData={handleUserData} handleEdditProfile={handleEdditProfile} />
-            )}
-          />
-          <PrivateRouter
-            redirectTo={ROUTES.SIGN_IN}
-            component={EditProfile}
-            isAuthorized={isAuthorized}
-            handleUserData={handleUserData}
-            handleEdditProfile={handleEdditProfile}
-            path={ROUTES.PROFILE}
-          />
-          <PrivateRouter
-            redirectTo={ROUTES.SIGN_IN}
-            component={CreateEdditArticles}
-            isAuthorized={isAuthorized}
-            path={isArticleEdit ? ROUTES.EDIT_ARTICLE : ROUTES.NEW_ARTICLE}
-            onIsArticleEdit={onIsArticleEdit}
-            isArticleEdit={isArticleEdit}
-          />
-          
+        <Route
+          path={[ROUTES.ROOT, ROUTES.ARTICLES]}
+          exact
+          component={() => <ArticlesList isAuthorized={isAuthorized} />}
+        />
+        <Route
+          exact
+          path={ROUTES.ARTICLES_SLUG}
+          component={({ match }) => (
+            <ArticleFull
+              slug={match.params.slug}
+              username={username}
+              onIsArticleEdit={onIsArticleEdit}
+              isAuthorized={isAuthorized}
+            />
+          )}
+        />
+        <Route path={ROUTES.SIGN_UP} render={() => <SignUp />} />
+        <Route
+          path={ROUTES.SIGN_IN}
+          render={() => (
+            <SignIn handleUserData={handleUserData} handleEdditProfile={handleEdditProfile} />
+          )}
+        />
+        <PrivateRouter
+          redirectTo={ROUTES.SIGN_IN}
+          component={EditProfile}
+          isAuthorized={isAuthorized}
+          handleUserData={handleUserData}
+          handleEdditProfile={handleEdditProfile}
+          path={ROUTES.PROFILE}
+        />
+        <PrivateRouter
+          redirectTo={ROUTES.SIGN_IN}
+          component={CreateEdditArticles}
+          isAuthorized={isAuthorized}
+          path={isArticleEdit ? ROUTES.EDIT_ARTICLE : ROUTES.NEW_ARTICLE}
+          onIsArticleEdit={onIsArticleEdit}
+          isArticleEdit={isArticleEdit}
+        />
       </div>
     </Router>
   );

@@ -3,29 +3,38 @@ import * as SERVICES from '../constans/services';
 
 const token = localStorage.getItem('token');
 
-export const getAllArticles =  async (offset = 0, limit = 5) => {
+export const getAllArticles = async (page, pageSize = 5) => {
+  const offset = pageSize * (page - 1);
   const articles = await axios
-    .get(SERVICES.ARTICLES, { params: { offset, limit } })
+    .get(SERVICES.ARTICLES, { 
+      params: { offset, limit: pageSize },
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
     .then((res) => {
-      return res.data
+      return res.data;
     })
     .catch((error) => {
-      throw error
-    })
-    
-  return articles
-}
+      throw error;
+    });
+  return articles;
+};
 
 export const getArticleBySlug = async (slug) => {
-  const response = await axios.get(`${SERVICES.ARTICLES}/${slug}`);
+  const response = await axios.get(`${SERVICES.ARTICLES}/${slug}`, {
+    headers: {
+      Authorization: `Token ${token}`,
+    }
+  });
   return response.data;
 };
 
 export const postCreateUser = async (user) => {
-    const response = await axios.post(SERVICES.ROOT_URL + SERVICES.USERS, user, {
-      headers: { 'Cache-Control': 'no-cache' }
-    });
-    return { data: response.data, error: null };
+  const response = await axios.post(SERVICES.ROOT_URL + SERVICES.USERS, user, {
+    headers: { 'Cache-Control': 'no-cache' }
+  });
+  return { data: response.data, error: null };
 };
 
 export const loginUser = async (user) => {
@@ -34,26 +43,24 @@ export const loginUser = async (user) => {
 };
 
 export const changeUserData = async (data) => {
-    const response = await axios.put(SERVICES.ROOT_URL + SERVICES.USER, data, {
-      headers: {
-        Authorization: `Token ${token}`
-      }
-    });
-    return { data: response.data, error: null };
+  const response = await axios.put(SERVICES.ROOT_URL + SERVICES.USER, data, {
+    headers: {
+      Authorization: `Token ${token}`
+    }
+  });
+  return { data: response.data, error: null };
 };
-
 
 export const createNewArticle = async (data, token) => {
-  await axios.post(`${SERVICES.ARTICLES}`, data, {
+  await axios
+    .post(`${SERVICES.ARTICLES}`, data, {
       headers: {
         Authorization: `Token ${token}`
       }
-  })
-  .then((response) => response.data)
-  .catch((err) => console.error(err))
-  
+    })
+    .then((response) => response.data)
+    .catch((err) => console.error(err));
 };
-
 
 export const deleteArticle = async (slug) => {
   try {
@@ -84,21 +91,23 @@ export const editArticle = async (slug, data) => {
 };
 
 export const postFavorited = async (slug) => {
-  await axios.post(`${SERVICES.ARTICLES}/${slug}/favorite`, '', {
-    headers: {
-      Authorization: `Token ${token}`
-    }
-  })
-  .then(() => true)
-  .catch((e) => console.error(e))
+  await axios
+    .post(`${SERVICES.ARTICLES}/${slug}/favorite`, '', {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(() => true)
+    .catch((e) => console.error(e));
 };
 
 export const deleteFavorited = async (slug) => {
-  await axios.delete(`${SERVICES.ARTICLES}/${slug}/favorite`, {
-    headers: {
-      Authorization: `Token ${token}`
-    }
-  })
-  .then(() => true)
-  .catch((e) => console.error(e))
+  await axios
+    .delete(`${SERVICES.ARTICLES}/${slug}/favorite`, {
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    })
+    .then(() => true)
+    .catch((e) => console.error(e));
 };

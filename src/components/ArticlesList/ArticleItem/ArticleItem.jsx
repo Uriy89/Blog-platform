@@ -21,25 +21,23 @@ const ArticleItem = ({
   isAuthorized,
   favorited
 }) => {
-
   const [like, setLike] = useState(likeCount);
   const [active, setActive] = useState(favorited);
 
   const onLike = () => {
-    if(isAuthorized)  {
+    if (isAuthorized) {
       setActive((active) => !active);
-      setLike(() => (active ? like - 1 : like + 1))
+      setLike(() => (active ? like - 1 : like + 1));
       !active ? postFavorited(slug) : deleteFavorited(slug);
     } else {
       message.error('You need is authorized!');
     }
-  }
+  };
 
   const heart = classNames({
-    [style.articleLike]: !favorited,
-    [style.articleLikeRed]: favorited,
+    [style.articleLike]: !active,
+    [style.articleLikeRed]: active
   });
-
 
   return (
     <article className={style.article} key={slug}>
@@ -49,7 +47,9 @@ const ArticleItem = ({
             <Link to={`${ROUTES.ARTICLES}/${slug}`}>
               <h3 className={style.articleTitle}>{title}</h3>
             </Link>
-            <span className={heart} onClick={onLike}>{like}</span>
+            <span className={heart} onClick={onLike}>
+              {like}
+            </span>
           </div>
           <div className={style.tags}>
             {tagList.map((tag, index) => (

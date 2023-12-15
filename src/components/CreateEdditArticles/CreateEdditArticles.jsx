@@ -14,6 +14,8 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
   const token = localStorage.getItem('token');
 
   const maxId = useRef(11);
+  let id = 0
+
   const {
     register,
     formState: { errors },
@@ -42,7 +44,7 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
         setValue('body', element.article.body);
         setTags(
           element.article.tagList.map((item) => {
-            return { value: item, id: String(maxId.current++) };
+            return { value: item, id: String(id++) };
           })
         );
 

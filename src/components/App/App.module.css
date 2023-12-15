@@ -60,6 +60,7 @@ html {
 }
 
 .title {
+  color: #000;
   margin-left: 30px;
   font-size: 18px;
 }
@@ -74,8 +75,12 @@ html {
 }
 
 .signUp {
-  color: #52C41A;
-  border: 1px solid #52C41A;
+  color: #52c41a;
+  border: 1px solid #52c41a;
   border-radius: 5px;
   padding: 6px 8px;
+}
+
+.profileName {
+  color: #000;
 }

@@ -8,7 +8,11 @@ import * as ROUTES from '../../constans/routers';
 const SignIn = ({ handleUserData, handleEdditProfile }) => {
   const history = useHistory();
   const [err, setErr] = useState(false);
-  const { register, handleSubmit } = useForm({
+  const { 
+    register, 
+    handleSubmit,
+    formState: { errors }, 
+  } = useForm({
     mode: 'onBlur'
   });
 
@@ -27,6 +31,7 @@ const SignIn = ({ handleUserData, handleEdditProfile }) => {
       }
     } catch (error) {
       console.log('Unexpected Error:', error);
+      setErr(true);
     }
   };
 
@@ -51,6 +56,10 @@ const SignIn = ({ handleUserData, handleEdditProfile }) => {
               className={style.input}
             />
           </label>
+          <div className={style.error}>
+            {errors?.email && <p>{errors?.email?.message}</p>}
+            {Object.keys(err).map((key) => (key === 'email' ? <p>This email {err[key]}</p> : null))}
+          </div>
           <label className={style.label}>
             Password
             <input

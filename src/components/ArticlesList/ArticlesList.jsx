@@ -5,13 +5,14 @@ import { Pagination } from 'antd';
 import { getAllArticles } from '../../services';
 
 const ArticlesList = ({ isAuthorized }) => {
+  const pageSize = 5;
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllArticles(currentPage)
+    getAllArticles(currentPage, pageSize)
       .then((body) => {
         setArticles(body.articles);
         setTotalPages(body.articlesCount);
@@ -25,7 +26,7 @@ const ArticlesList = ({ isAuthorized }) => {
   }
 
   const onChangePage = (page) => {
-    getAllArticles(page)
+    getAllArticles(page, pageSize)
       .then((body) => {
         setArticles(body.articles);
         setTotalPages(body.articlesCount);
@@ -33,25 +34,25 @@ const ArticlesList = ({ isAuthorized }) => {
       })
       .catch((err) => console.log(err));
     setCurrentPage(page);
-  }
+  };
 
   return (
     <div className={styles.articlesList}>
       {articles.map((article) => (
-          <ArticleItem
-            key={article.slug}
-            slug={article.slug}
-            title={article.title}
-            description={article.description}
-            body={article.body}
-            tagList={article.tagList}
-            likeCount={article.favoritesCount}
-            username={article.author.username}
-            image={article.author.image}
-            updatedAt={article.updatedAt}
-            isAuthorized={isAuthorized}
-            favorited={article.favorited}
-          />
+        <ArticleItem
+          key={article.slug}
+          slug={article.slug}
+          title={article.title}
+          description={article.description}
+          body={article.body}
+          tagList={article.tagList}
+          likeCount={article.favoritesCount}
+          username={article.author.username}
+          image={article.author.image}
+          updatedAt={article.updatedAt}
+          isAuthorized={isAuthorized}
+          favorited={article.favorited}
+        />
       ))}
       <div className={styles.pagination}>
         <Pagination
