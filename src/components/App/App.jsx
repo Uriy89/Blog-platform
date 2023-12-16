@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styles from './App.module.css';
 import * as ROUTES from '../../constants/routers';
@@ -15,7 +15,7 @@ import SignUp from '../SignUp';
 import SignIn from '../SignIn';
 
 const App = () => {
-  const isAuthorized = useRef(false);
+  const [isAuthorized, setIsAuthorized] = useState(!!localStorage.getItem(SERVICES.TOKEN));
   const [username, setUsername] = useState(localStorage.getItem(SERVICES.USER_NAME));
   const [image, setImage] = useState(localStorage.getItem(SERVICES.IMAGE));
   const [isEditArticle, setIsEditArticle] = useState(false);
@@ -25,6 +25,7 @@ const App = () => {
     localStorage.setItem(SERVICES.USER_NAME, username);
     localStorage.setItem(SERVICES.EMAIL, email);
     localStorage.setItem(SERVICES.IMAGE, image);
+    setIsAuthorized(true);
   };
 
   const handleLogout = () => {
@@ -32,6 +33,7 @@ const App = () => {
     localStorage.removeItem(SERVICES.USER_NAME);
     localStorage.removeItem(SERVICES.EMAIL);
     localStorage.removeItem(SERVICES.IMAGE);
+    setIsAuthorized(false);
   };
 
   const handleEdditProfile = (username, image) => {
@@ -45,14 +47,13 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem(SERVICES.TOKEN);
-    if (token !== null) {
-      isAuthorized.current = true;
-    }
+    setIsAuthorized(!!token);
   }, []);
 
   return (
     
     <Router>
+      
       <header className={styles.mainHeader}>
         <Link to={ROUTES.ROOT}>
           <h1 className={styles.title}>Realworld Blog</h1>
