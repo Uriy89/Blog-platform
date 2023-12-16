@@ -8,3 +8,10 @@ export const formatDate = (updatedAt) => {
   }
   return date;
 };
+
+export const articleData = (data) => {
+    const { body, description, title, ...tags } = data;
+    const allTags = Object.entries(tags).map((el) => el[1]);
+    const tagList = [...new Set(allTags.filter((element) => element.trim() !== ''))];
+    return { body, description, title, tagList };
+}

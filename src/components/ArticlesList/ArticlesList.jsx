@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ArticlesList.module.css';
-import ArticleItem from './ArticleItem';
 import { Pagination } from 'antd';
 import { getAllArticles } from '../../services';
+import ArticleCommon from '../ArticleCommon';
+import Loader from "../Loader";
 
 const ArticlesList = ({ isAuthorized }) => {
   const pageSize = 5;
@@ -22,7 +23,7 @@ const ArticlesList = ({ isAuthorized }) => {
   }, [currentPage]);
 
   if (loading) {
-    return <span className={styles.loader}></span>;
+    return <Loader />;
   }
 
   const onChangePage = (page) => {
@@ -39,19 +40,10 @@ const ArticlesList = ({ isAuthorized }) => {
   return (
     <div className={styles.articlesList}>
       {articles.map((article) => (
-        <ArticleItem
+        <ArticleCommon
           key={article.slug}
-          slug={article.slug}
-          title={article.title}
-          description={article.description}
-          body={article.body}
-          tagList={article.tagList}
-          likeCount={article.favoritesCount}
-          username={article.author.username}
-          image={article.author.image}
-          updatedAt={article.updatedAt}
+          data={article}
           isAuthorized={isAuthorized}
-          favorited={article.favorited}
         />
       ))}
       <div className={styles.pagination}>

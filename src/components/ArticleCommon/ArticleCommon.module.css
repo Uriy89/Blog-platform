@@ -1,0 +1,168 @@
+.section {
+    width: 941px;
+    height: auto;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+    margin: 0 auto;
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .articleHeader {
+    width: 97%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    align-items: baseline;
+  }
+  
+  .contentTable {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 20px;
+    color: #1890ff;
+    font-style: normal;
+    font-weight: 400;
+    max-width: 600px;
+    cursor: pointer;
+  }
+  
+  .title h3 {
+    overflow: hidden;
+  }
+  
+  .articleLike {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+  }
+  
+  .articleLikeRed {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+  }
+  
+  .articleLike::before {
+    content: url('../../assets/images/heart.svg');
+    position: relative;
+    top: 2px;
+    right: 1px;
+  }
+  
+  .articleLikeRed::before {
+    content: url('../../assets/images/redHeart.svg');
+    position: relative;
+    top: 2px;
+    right: 1px;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 6px;
+    position: relative;
+    top: -17px;
+  }
+  
+  .articleTag {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    padding: 2px 3px;
+  }
+  
+  .userTable {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .userInfo {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .span {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: end;
+  }
+  
+  .datePublication {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+  .userName {
+    font-size: 18px;
+    font-weight: 400;
+    align-items: end;
+  }
+  
+  .userAvatar {
+    width: 46px;
+    height: 46px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .datePublication {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+  .description {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .fullContent {
+    width: 880px;
+    padding: 20px 16px;
+    overflow: hidden;
+  }
+  
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #1890ff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    animation: rotation 1s linear infinite;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

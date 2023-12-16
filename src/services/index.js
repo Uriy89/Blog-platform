@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as SERVICES from '../constans/services';
+import * as SERVICES from '../constants/services';
 
 const token = localStorage.getItem('token');
 

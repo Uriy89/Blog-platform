@@ -1,19 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
-import style from './CreateEdditArticles.module.css';
+import React, { useState, useRef, useEffect } from "react";
+import style from "./ArticleForm.module.css";
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
-import { createNewArticle, getArticleBySlug, editArticle } from '../../services';
-import * as ROUTES from '../../constans/routers';
+import { articleData } from "../../utils";
+import { getArticleBySlug, editArticle, createNewArticle } from '../../services';
+import * as ROUTES from '../../constants/routers';
 import { message } from 'antd';
 
-const CreateEdditArticles = ({ isArticleEdit }) => {
+const ArticleForm = ({ isEditArticle }) => {
   const { slug } = useParams();
   const [tags, setTags] = useState([]);
   const [tagValue, setTagValue] = useState('');
+  const maxId = useRef(11);
   const history = useHistory();
   const token = localStorage.getItem('token');
-
-  const maxId = useRef(11);
   let id = 0
 
   const {
@@ -53,26 +53,6 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
     }
   }, [slug])
 
-
-  const onSubmitHandler = (data) => {
-      const { body, description, title, ...tags } = data;
-      const allTags = Object.entries(tags).map((el) => el[1]);
-      const tagList = [...new Set(allTags.filter((element) => element.trim() !== ''))];
-      const newData = { body, description, title, tagList };
-      if(!slug) {
-        createNewArticle({ article: newData }, token)
-          .then(() => {
-            message.success('Article is create');
-            history.push(ROUTES.ARTICLES)
-          })
-          .catch((err) => console.error('Create article error: ', err))
-      } else {
-        editArticle(slug, { article: newData })
-          .then(() => history.push(ROUTES.ROOT))
-          .catch((err) => console.error('Edit article error: ', err));
-      }
-  };
-
   const deleteTag = (id) => {
     setTags((tag) => tag.filter((element) => element.id !== id));
     unregister(`tags${id}`);
@@ -86,11 +66,27 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
     }
   };
 
+  const onSubmitHandler = (data) => {
+    const newData = articleData(data);
+    if(!slug) {
+      createNewArticle({ article: newData }, token)
+        .then(() => {
+          message.success('Article is create');
+          history.push(ROUTES.ARTICLES)
+        })
+        .catch((err) => console.error('Create article error: ', err))
+    } else {
+      editArticle(slug, { article: newData })
+        .then(() => history.push(ROUTES.ROOT))
+        .catch((err) => console.error('Edit article error: ', err));
+    }
+};
+ 
   return (
     <section className={style.editProfile}>
       <div className={style.wrapper}>
         <div className={style.title}>
-          <h2>{isArticleEdit ? 'Edit article' : 'Create new article'}</h2>
+          <h2>{isEditArticle? 'Edit article' : 'Create new article' }</h2>
         </div>
         <form className={style.form} onSubmit={handleSubmit(onSubmitHandler)}>
           <label className={style.label}>
@@ -183,6 +179,7 @@ const CreateEdditArticles = ({ isArticleEdit }) => {
       </div>
     </section>
   );
-};
 
-export default CreateEdditArticles;
+}
+
+export default ArticleForm;

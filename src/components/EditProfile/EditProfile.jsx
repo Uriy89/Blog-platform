@@ -3,8 +3,8 @@ import style from './EditProfile.module.css';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { changeUserData } from '../../services';
-import * as ROUTES from '../../constans/routers';
-import * as SERVICES from '../../constans/services';
+import * as ROUTES from '../../constants/routers';
+import * as SERVICES from '../../constants/services';
 
 const EditProfile = (props) => {
   const { handleUserData, handleEdditProfile } = props;

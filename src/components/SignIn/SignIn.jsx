@@ -3,7 +3,7 @@ import style from './SignIn.module.css';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { loginUser } from '../../services';
-import * as ROUTES from '../../constans/routers';
+import * as ROUTES from '../../constants/routers';
 
 const SignIn = ({ handleUserData, handleEdditProfile }) => {
   const history = useHistory();

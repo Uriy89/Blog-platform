@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import styles from './App.module.css';
-import * as ROUTES from '../../constans/routers';
-import * as SERVICES from '../../constans/services';
+import * as ROUTES from '../../constants/routers';
+import * as SERVICES from '../../constants/services';
 import PrivateRouter from '../PrivateRouter';
 import ArticlesList from '../ArticlesList';
 import EditProfile from '../EditProfile';
 import ArticleFull from '../ArticleFull';
-import CreateEdditArticles from '../CreateEdditArticles';
+import CreateArticle from '../CreateArticle';
+import EdditArticle from '../EdditArticle';
 import style from '../UserPrivate/UserPrivate.module.css';
 import d from '../../assets/images/noava.png';
 import SignUp from '../SignUp';
 import SignIn from '../SignIn';
 
 const App = () => {
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const isAuthorized = useRef(false);
   const [username, setUsername] = useState(localStorage.getItem(SERVICES.USER_NAME));
   const [image, setImage] = useState(localStorage.getItem(SERVICES.IMAGE));
-  const [isArticleEdit, setIsArticleEdit] = useState(false);
+  const [isEditArticle, setIsEditArticle] = useState(false);
 
   const handleUserData = (token, username, email, image) => {
     localStorage.setItem(SERVICES.TOKEN, token);
     localStorage.setItem(SERVICES.USER_NAME, username);
     localStorage.setItem(SERVICES.EMAIL, email);
     localStorage.setItem(SERVICES.IMAGE, image);
-    setIsAuthorized(true);
   };
 
   const handleLogout = () => {
@@ -32,7 +32,6 @@ const App = () => {
     localStorage.removeItem(SERVICES.USER_NAME);
     localStorage.removeItem(SERVICES.EMAIL);
     localStorage.removeItem(SERVICES.IMAGE);
-    setIsAuthorized(false);
   };
 
   const handleEdditProfile = (username, image) => {
@@ -41,17 +40,18 @@ const App = () => {
   };
 
   const onIsArticleEdit = (value) => {
-    setIsArticleEdit(value);
+    setIsEditArticle(value);
   };
 
   useEffect(() => {
     const token = localStorage.getItem(SERVICES.TOKEN);
     if (token !== null) {
-      setIsAuthorized(true);
+      isAuthorized.current = true;
     }
   }, []);
 
   return (
+    
     <Router>
       <header className={styles.mainHeader}>
         <Link to={ROUTES.ROOT}>
@@ -96,23 +96,23 @@ const App = () => {
         )}
       </header>
       <div className="wrapper">
-        <Route
-          path={[ROUTES.ROOT, ROUTES.ARTICLES]}
-          exact
-          component={() => <ArticlesList isAuthorized={isAuthorized} />}
-        />
-        <Route
+      <Route
           exact
           path={ROUTES.ARTICLES_SLUG}
-          component={({ match }) => (
+          component={() => (
             <ArticleFull
-              slug={match.params.slug}
               username={username}
               onIsArticleEdit={onIsArticleEdit}
               isAuthorized={isAuthorized}
             />
           )}
         />
+        <Route
+          exact
+          path={[ROUTES.ROOT, ROUTES.ARTICLES]}
+          component={() => <ArticlesList isAuthorized={isAuthorized} />}
+        />
+        
         <Route path={ROUTES.SIGN_UP} render={() => <SignUp />} />
         <Route
           path={ROUTES.SIGN_IN}
@@ -130,14 +130,17 @@ const App = () => {
         />
         <PrivateRouter
           redirectTo={ROUTES.SIGN_IN}
-          component={CreateEdditArticles}
+          component={isEditArticle ? CreateArticle : EdditArticle}
           isAuthorized={isAuthorized}
-          path={isArticleEdit ? ROUTES.EDIT_ARTICLE : ROUTES.NEW_ARTICLE}
+          path={isEditArticle ? ROUTES.EDIT_ARTICLE : ROUTES.NEW_ARTICLE}
           onIsArticleEdit={onIsArticleEdit}
-          isArticleEdit={isArticleEdit}
+          isEditArticle={isEditArticle}
         />
+      
       </div>
+      
     </Router>
+    
   );
 };
 

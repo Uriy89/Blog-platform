@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import { postCreateUser } from '../../services';
-import * as ROUTES from '../../constans/routers';
+import * as ROUTES from '../../constants/routers';
 
 const SignUp = () => {
   const [pass, setPass] = useState('');

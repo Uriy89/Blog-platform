@@ -1,0 +1,20 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnDelete {
+    padding: 6px 17px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #f5222d;
+    color: #f5222d;
+  }
+  
+  .btnAdd {
+    padding: 6px 17px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #1890ff;
+    color: #1890ff;
+  }
