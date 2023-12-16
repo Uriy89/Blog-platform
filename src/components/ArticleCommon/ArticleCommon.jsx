@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { deleteArticle } from '../../services';
-import { Link } from 'react-router-dom';
 import style from "./ArticleCommon.module.css";
 import Markdown from 'markdown-to-jsx';
 import { formatDate } from '../../utils';
